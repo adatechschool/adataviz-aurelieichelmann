@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="style"> 
+    <title>adataviz</title>
+  </head>
+  <body>
+    <header>
+      <h1>Parcs et Jardins de Nantes</h1>
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Rechercher un parc..." />
+      </div>
+    </header>
+
+    <main>
+      <section id="map-section">
+        <div id="map-placeholder">
+          <h2>CARTE VILLE DE NANTES</h2>
+          <iframe src="https://data.nantesmetropole.fr/explore/embed/dataset/244400404_parcs-jardins-nantes/map/?disjunctive.gardien&disjunctive.jeux_enfants&disjunctive.pataugeoire&disjunctive.sanitaires&disjunctive.sanitaires_handicapes&disjunctive.chiens_autorises&disjunctive.jardin_clos&disjunctive.abris&disjunctive.point_eau_potable&disjunctive.table_pique_nique&disjunctive.libtype&location=14,47.22073,-1.54847&basemap=jawg.streets&dataChart=eyJxdWVyaWVzIjpbeyJjaGFydHMiOlt7InR5cGUiOiJzY2F0dGVyIiwiZnVuYyI6IkNPVU5UIiwieUF4aXMiOiJsb25naXR1ZGUiLCJzY2llbnRpZmljRGlzcGxheSI6dHJ1ZSwiY29sb3IiOiIjRjE4QzAwIn1dLCJ4QXhpcyI6ImxpYnR5cGUiLCJtYXhwb2ludHMiOm51bGwsInNvcnQiOiIiLCJjb25maWciOnsiZGF0YXNldCI6IjI0NDQwMDQwNF9wYXJjcy1qYXJkaW5zLW5hbnRlcyIsIm9wdGlvbnMiOnsiZGlzanVuY3RpdmUuZ2FyZGllbiI6dHJ1ZSwiZGlzanVuY3RpdmUuamV1eF9lbmZhbnRzIjp0cnVlLCJkaXNqdW5jdGl2ZS5wYXRhdWdlb2lyZSI6dHJ1ZSwiZGlzanVuY3RpdmUuc2FuaXRhaXJlcyI6dHJ1ZSwiZGlzanVuY3RpdmUuc2FuaXRhaXJlc19oYW5kaWNhcGVzIjp0cnVlLCJkaXNqdW5jdGl2ZS5jaGllbnNfYXV0b3Jpc2VzIjp0cnVlLCJkaXNqdW5jdGl2ZS5qYXJkaW5fY2xvcyI6dHJ1ZSwiZGlzanVuY3RpdmUuYWJyaXMiOnRydWUsImRpc2p1bmN0aXZlLnBvaW50X2VhdV9wb3RhYmxlIjp0cnVlLCJkaXNqdW5jdGl2ZS50YWJsZV9waXF1ZV9uaXF1ZSI6dHJ1ZSwiZGlzanVuY3RpdmUubGlidHlwZSI6dHJ1ZX19fV0sInRpbWVzY2FsZSI6IiIsImRpc3BsYXlMZWdlbmQiOnRydWUsImFsaWduTW9udGgiOnRydWV9&static=false&datasetcard=false&scrollWheelZoom=false"width="100%" height="100%" frameborder="0"></iframe>></iframe>
+        </div>
+      </section>
+
+      <section id="data-section">
+        <h3>Liste des parcs, jardin et  squares</h3>
+        
+        <div id="donnees-container">
+          </div>
+      </section>
+    </main>
+
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

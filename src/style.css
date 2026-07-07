@@ -1,0 +1,120 @@
+/* 1. Base globale de la page */
+body {
+  margin: 0;
+  padding: 40px 20px;
+  background-color: #eeeeee;
+  color: #000000;
+  font-family: 'American Typewriter', Georgia, serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centre tous les blocs principaux de la page */
+  gap: 30px;
+  box-sizing: border-box;
+}
+
+/* 2. En-tête (Titre principal + Barre de recherche) */
+header {
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+}
+
+.search-container {
+  width: 100%;
+}
+
+#search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 16px;
+  font-family: inherit;
+  font-size: 14px;
+  border: 1.5px solid #1a1a1a;
+  border-radius: 20px;
+  outline: none;
+}
+
+/* 3. SECTION DE LA CARTE - Parfaitement centrée au milieu */
+#map-section {
+  width: 100%;
+  max-width: 800px; /* Aligné proprement avec le reste du contenu */
+  margin: 0 auto;
+}
+
+#map-section h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+}
+
+/* L'habillage autour de ton iframe */
+#map-placeholder {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden; /* Pour que les bords de l'iframe soient arrondis */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #90eff7; 
+}
+
+/* 4. Compteur et titre de la liste */
+h3, #compteur-total {
+  text-align: center;
+  width: 100%;
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+
+/* 5. Grille d'affichage des cercles */
+#donnees-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 25px;
+  justify-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 20px;
+}
+
+/* 6. Les ronds violets d'origine */
+.bulle-parc {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #16b0b8; 
+  border: 2px solid #90eff7; 
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  padding: 14px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Textes à l'intérieur des cercles */
+.bulle-parc strong {
+  font-size: 12px;
+  color: #000000;
+  margin-bottom: 5px;
+  word-break: break-word;
+}
+
+.bulle-parc span {
+  font-size: 11px;
+  color: #010000;
+  margin-bottom: 4px;
+}
+
+.bulle-parc small {
+  font-size: 10px;
+  color: #000000;
+}
