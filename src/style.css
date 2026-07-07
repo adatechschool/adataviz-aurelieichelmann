@@ -1,120 +1,129 @@
-/* 1. Base globale de la page */
+/* ---- Reset & Global ---- */
 body {
   margin: 0;
-  padding: 40px 20px;
-  background-color: #eeeeee;
-  color: #000000;
-  font-family: 'American Typewriter', Georgia, serif;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f4f6f8;
   display: flex;
-  flex-direction: column;
-  align-items: center; /* Centre tous les blocs principaux de la page */
-  gap: 30px;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1200px; /* Légèrement plus large pour les 3 colonnes */
+  background-color: #b2d8c3; /* Le vert pastel de ta maquette */
+  border: 2px solid #33a88b;
+  border-radius: 12px;
+  padding: 40px;
   box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-/* 2. En-tête (Titre principal + Barre de recherche) */
-header {
-  text-align: center;
-  width: 100%;
-  max-width: 800px;
+/* ---- Header (Plus de chevauchements) ---- */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 20px;
 }
 
-h1 {
-  margin-bottom: 20px;
+.main-header h1 {
+  margin: 0;
   font-size: 2.2rem;
+  color: #1a3c2b;
+  /* On applique la police ici */
+  font-family: "American Typewriter", "Courier New", Georgia, serif; 
+  font-weight: bold;
 }
 
-.search-container {
-  width: 100%;
-}
-
-#search-input {
-  width: 100%;
-  max-width: 400px;
-  padding: 10px 16px;
-  font-family: inherit;
-  font-size: 14px;
-  border: 1.5px solid #1a1a1a;
-  border-radius: 20px;
+.search-container input {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 30px; /* Format pilule plus moderne */
   outline: none;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* 3. SECTION DE LA CARTE - Parfaitement centrée au milieu */
+.search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ---- Section Carte ---- */
 #map-section {
-  width: 100%;
-  max-width: 800px; /* Aligné proprement avec le reste du contenu */
-  margin: 0 auto;
+  margin-bottom: 40px;
 }
 
-#map-section h2 {
-  text-align: center;
-  margin-bottom: 15px;
-  font-size: 1.4rem;
+#map-section h2, #data-section h2 {
+  font-size: 1.6rem;
+  color: #1a3c2b;
+  margin-top: 0;
+  /* On l'applique aussi sur les sous-titres des sections */
+  font-family: "American Typewriter", "Courier New", Georgia, serif;
 }
 
-/* L'habillage autour de ton iframe */
 #map-placeholder {
   width: 100%;
-  border-radius: 12px;
-  overflow: hidden; /* Pour que les bords de l'iframe soient arrondis */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid #90eff7; 
+  height: 380px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* 4. Compteur et titre de la liste */
-h3, #compteur-total {
-  text-align: center;
-  width: 100%;
-  margin: 10px 0;
-  font-size: 1.2rem;
-}
-
-/* 5. Grille d'affichage des cercles */
-#donnees-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 25px;
-  justify-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 900px;
+/* ---- Structure en 3 Colonnes ---- */
+.categories-columns {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
-/* 6. Les ronds violets d'origine */
-.bulle-parc {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background-color: #16b0b8; 
-  border: 2px solid #90eff7; 
-  
+.column-category {
+  flex: 1; /* Les trois colonnes prennent la même largeur */
+  background-color: rgba(255, 255, 255, 0.3); /* Léger fond transparent */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.column-category h3 {
+  margin-top: 0;
+  text-align: center;
+  color: #1a3c2b;
+  border-bottom: 2px solid #1abc9c;
+  padding-bottom: 10px;
+  /* Et sur les catégories de parcs, squares, jardins */
+  font-family: "American Typewriter", "Courier New", Georgia, serif;
+}
+
+/* ---- Grille interne à chaque colonne ---- */
+.cards-grid {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  padding: 15px 0;
+}
+
+/* Tes cercles blancs ajustés */
+.card-circle {
+  width: 110px; /* Un peu plus petits pour tenir dans les colonnes */
+  height: 110px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  
-  padding: 14px;
+  padding: 10px;
   box-sizing: border-box;
-  overflow: hidden;
-}
-
-/* Textes à l'intérieur des cercles */
-.bulle-parc strong {
-  font-size: 12px;
-  color: #000000;
-  margin-bottom: 5px;
-  word-break: break-word;
-}
-
-.bulle-parc span {
-  font-size: 11px;
-  color: #010000;
-  margin-bottom: 4px;
-}
-
-.bulle-parc small {
-  font-size: 10px;
-  color: #000000;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }

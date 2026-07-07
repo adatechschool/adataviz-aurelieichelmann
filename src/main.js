@@ -1,81 +1,59 @@
-import './style.css';
-import { formaterDonnee } from './utils.js';
+//Recup d'une API à partir d'une URL
+//"https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_parcs-jardins-nantes/records?limit=10"
+/*fetch("https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_parcs-jardins-nantes/records?limit=20")
+.then(response => response.json())
+.then((data) => {
+console.log(data)
+data.results.forEach((parc) => {
+  console.log(parc.nom_complet)
 
-const URL_API = "https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_parcs-jardins-nantes/records?limit=10";
+  })
+})
+const list = document.getElementById("container");
+const insertCard = (parc) => {
+    const card =
+       `<div class="card">
+            <p>${parc.nom_complet}</p>
+        </div>`
+    list.insertAdjacentHTML("beforeend", card);
+};*/
 
-// On stocke la liste globale des équipements pour pouvoir la filtrer plus tard
-let tousLesEquipements = [];
+// 1. On récupère nos 3 listes HTML distinctes
+const listParcs = document.getElementById("container-parcs");
+const listSquares = document.getElementById("container-squares");
+const listJardins = document.getElementById("container-jardins");
 
-function afficherCompteur(total) {
-  let compteur = document.getElementById('compteur-total');
-  if (!compteur) {
-    compteur = document.createElement('h3');
-    compteur.id = 'compteur-total';
-    const conteneur = document.getElementById('donnees-container');
-    conteneur.before(compteur);
-  }
-  compteur.textContent = `📍 Nombre total de localisation : ${total}`;
-}
-
-function afficherEquipements(listeEquipements) {
-  const conteneur = document.getElementById('donnees-container');
-  conteneur.innerHTML = ""; 
-
-  listeEquipements.forEach(equipement => {
-    const carte = document.createElement('div');
-    carte.className = 'bulle-parc';
-    
-    carte.innerHTML = `
-      <strong>${equipement.nom}</strong>
-      <small>📍 ${equipement.adresse}</small>
+// 2. Fonction pour injecter une carte dans un conteneur donné
+const insertCard = (parc, conteneur) => {
+    const card = `
+        <div class="card-circle">
+            <p>${parc.nom_complet || "Inconnu"}</p>
+        </div>
     `;
+    conteneur.insertAdjacentHTML("beforeend", card);
+};
 
-    conteneur.appendChild(carte);
-  });
-}
+// 3. Récupération des données
+fetch("https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_parcs-jardins-nantes/records?limit=10")
+    .then((response) => response.json())
+    .then((data) => {
+        // On vide les conteneurs
+        listParcs.innerHTML = "";
+        listSquares.innerHTML = "";
+        listJardins.innerHTML = "";
 
-// 🌟 LA FONCTION MAGIQUE DE RECHERCHE
-function configurerRecherche() {
-  const barreRecherche = document.getElementById('search-input');
-  
-  if (!barreRecherche) return;
+        // 4. Tri intelligent selon le nom complet du lieu
+        data.results.forEach((parc) => {
+            const nomLower = parc.nom_complet.toLowerCase();
 
-  // À chaque fois que l'utilisateur tape une lettre
-  barreRecherche.addEventListener('input', (evenement) => {
-    const texteRecherche = evenement.target.value.toLowerCase();
-
-    // On filtre notre tableau global
-    const equipementsFiltres = tousLesEquipements.filter(equipement => {
-      return equipement.nom.toLowerCase().includes(texteRecherche);
-    });
-
-    // On met à jour l'affichage et le compteur avec les résultats filtrés
-    afficherEquipements(equipementsFiltres);
-    afficherCompteur(equipementsFiltres.length);
-  });
-}
-
-async function chargerDonnees() {
-  try {
-    const reponse = await fetch(URL_API);
-    if (!reponse.ok) throw new Error(`Erreur HTTP ! Statut : ${reponse.status}`);
-
-    const donneesRecues = await reponse.json();
-    const resultatsBruts = donneesRecues.results || [];
-    
-    // On remplit notre variable globale
-    tousLesEquipements = resultatsBruts.map(item => formaterDonnee(item));
-    
-    // Premier affichage complet
-    afficherCompteur(tousLesEquipements.length);
-    afficherEquipements(tousLesEquipements);
-    
-    // On active la barre de recherche
-    configurerRecherche();
-    
-  } catch (erreur) {
-    console.error("Erreur de chargement :", erreur);
-  }
-}
-
-chargerDonnees();
+            if (nomLower.includes("square")) {
+                insertCard(parc, listSquares);
+            } else if (nomLower.includes("jardin")) {
+                insertCard(parc, listJardins);
+            } else {
+                // Par défaut, si c'est un parc ou autre chose, on le met dans Parcs
+                insertCard(parc, listParcs);
+            }
+        });
+    })
+    .catch((error) => console.error("Erreur :", error));
