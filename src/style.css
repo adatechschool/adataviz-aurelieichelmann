@@ -1,129 +1,160 @@
-/* ---- Reset & Global ---- */
+/* ---- 1. Polices & Fond Élégant ---- */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: #f4f6f8;
+  font-family: 'Space Grotesk', sans-serif;
+  background: linear-gradient(135deg, #112219 0%, #1c3b2b 50%, #0b1711 100%);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
+  box-sizing: border-box;
 }
 
+/* Le grand conteneur style verrière asymétrique */
 .app-container {
   width: 100%;
-  max-width: 1200px; /* Légèrement plus large pour les 3 colonnes */
-  background-color: #b2d8c3; /* Le vert pastel de ta maquette */
-  border: 2px solid #33a88b;
-  border-radius: 12px;
-  padding: 40px;
+  max-width: 1200px;
+  background: rgba(243, 247, 244, 0.96);
+  border-left: 6px solid #bfa15f; /* Ligne d'or sur le côté pour casser la symétrie */
+  border-radius: 40px 10px 40px 10px; /* Coins opposés asymétriques */
+  padding: 50px;
   box-sizing: border-box;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
 }
 
-/* ---- Header (Plus de chevauchements) ---- */
+/* ---- 2. Header Typographique ---- */
 .main-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
-  padding-bottom: 20px;
+  margin-bottom: 50px;
+  position: relative;
 }
 
 .main-header h1 {
   margin: 0;
-  font-size: 2.2rem;
-  color: #1a3c2b;
-  /* On applique la police ici */
-  font-family: "American Typewriter", "Courier New", Georgia, serif; 
+  font-size: 2.8rem;
+  color: #142d22;
+  font-family: "American Typewriter", "Courier New", Georgia, serif;
   font-weight: bold;
 }
 
+/* Barre de recherche au look minimaliste haut de gamme */
 .search-container input {
-  background-color: #1abc9c;
-  color: white;
+  background-color: transparent;
+  color: #142d22;
   border: none;
-  padding: 14px 24px;
+  border-bottom: 3px solid #1c3b2b;
+  padding: 10px 20px;
   font-size: 1rem;
   font-weight: 600;
-  border-radius: 30px; /* Format pilule plus moderne */
+  border-radius: 0;
   outline: none;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: all 0.4s ease;
 }
 
-.search-container input::placeholder {
-  color: rgba(255, 255, 255, 0.8);
+.search-container input:focus {
+  border-bottom-color: #bfa15f;
+  padding-right: 40px; /* S'allonge élégamment au focus */
 }
 
-/* ---- Section Carte ---- */
-#map-section {
-  margin-bottom: 40px;
-}
-
-#map-section h2, #data-section h2 {
-  font-size: 1.6rem;
-  color: #1a3c2b;
-  margin-top: 0;
-  /* On l'applique aussi sur les sous-titres des sections */
-  font-family: "American Typewriter", "Courier New", Georgia, serif;
-}
-
+/* ---- 3. Section Carte ---- */
 #map-placeholder {
   width: 100%;
-  height: 380px;
-  border-radius: 8px;
+  height: 400px;
+  border-radius: 30px 0 30px 0; /* Rappel asymétrique */
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* ---- Structure en 3 Colonnes ---- */
+/* ---- 4. Les 3 Colonnes Vivantes ---- */
 .categories-columns {
   display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  margin-top: 20px;
+  gap: 30px;
+  margin-top: 40px;
 }
 
 .column-category {
-  flex: 1; /* Les trois colonnes prennent la même largeur */
-  background-color: rgba(255, 255, 255, 0.3); /* Léger fond transparent */
-  padding: 20px;
-  border-radius: 8px;
+  flex: 1;
+  background: #ffffff;
+  padding: 30px 20px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(20, 45, 34, 0.04);
+  border: 1px solid rgba(20, 45, 34, 0.03);
 }
 
 .column-category h3 {
   margin-top: 0;
-  text-align: center;
-  color: #1a3c2b;
-  border-bottom: 2px solid #1abc9c;
-  padding-bottom: 10px;
-  /* Et sur les catégories de parcs, squares, jardins */
+  text-align: left; /* Alignement à gauche plus moderne */
+  color: #142d22;
   font-family: "American Typewriter", "Courier New", Georgia, serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding-bottom: 15px;
 }
 
-/* ---- Grille interne à chaque colonne ---- */
+/* ---- 5. L'effet Galet Organique Alterné (La zone de confort est loin !) ---- */
 .cards-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px;
   justify-content: center;
-  padding: 15px 0;
+  padding: 20px 0;
 }
 
-/* Tes cercles blancs ajustés */
+/* Définition du galet de base */
 .card-circle {
-  width: 110px; /* Un peu plus petits pour tenir dans les colonnes */
-  height: 110px;
-  background-color: #ffffff;
-  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  background: #f4f7f5;
+  /* Forme organique non-parfaite */
+  border-radius: 60% 40% 65% 35% / 45% 55% 45% 55%; 
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   box-sizing: border-box;
-  font-size: 0.75rem;
-  font-weight: bold;
-  color: #333;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #1c3b2b;
+  cursor: pointer;
+  box-shadow: 8px 8px 20px #e1e7e3, -8px -8px 20px #ffffff; /* Effet de relief doux */
+  /* Animation morphique fluide */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Changement de forme asymétrique automatique pour 1 galet sur 2 */
+.card-circle:nth-child(even) {
+  border-radius: 40% 60% 35% 65% / 55% 45% 55% 45%;
+  background: #edf2ee;
+}
+
+/* Effet Morphing au survol : le galet change dynamiquement de forme et flotte */
+.card-circle:hover {
+  transform: translateY(-8px) rotate(3deg);
+  border-radius: 50% 50% 50% 50%; /* Devient un rond parfait uniquement au survol ! */
+  background: #ffffff;
+  color: #bfa15f;
+  box-shadow: 0 15px 30px rgba(28, 59, 43, 0.15);
+}
+
+/* Quand on clique (Galet Actif pour l'adresse) */
+.card-circle.active {
+  background: linear-gradient(135deg, #1c3b2b, #142d22);
+  color: #ffffff;
+  border-radius: 35% 65% 40% 60% / 60% 40% 60% 40%;
+  box-shadow: 0 10px 25px rgba(20, 45, 34, 0.4);
+  transform: scale(1.05);
+}
+
+.parc-address {
+  font-size: 0.7rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
 }
