@@ -1,26 +1,28 @@
 // 1. On importe nos deux fonctions de logique métier depuis utils.js
 import { trierLesLieux, filtrerLesLieux } from "./utils.js";
 
-// On récupère nos éléments HTML
+// DOM
 const listParcs = document.getElementById("container-parcs");
 const listSquares = document.getElementById("container-squares");
 const listJardins = document.getElementById("container-jardins");
-const searchInput = document.getElementById("search-input"); // Ta barre de recherche
+const searchInput = document.getElementById("search-input"); 
 
 // Variable globale pour stocker les parcs reçus de l'API afin que la recherche puisse fouiller dedans
 let tousLesParcs = [];
 
-// Fonction pour injecter une carte dans un conteneur donné (avec gestion du clic pour l'adresse)
+/**
+ * Fonction de création et gestion d'une carte (galet organique)
+ */
 const insertCard = (parc, conteneur) => {
+    if (!conteneur) return;
+
     const cardElement = document.createElement("div");
     cardElement.className = "card-circle";
     
     cardElement.innerHTML = `
         <div class="card-content">
             <p class="parc-name">${parc.nom_complet || "Inconnu"}</p>
-            <p class="parc-address" style="display: none;">
-                📍 ${parc.adresse_complete || parc.adresse || parc.adresse_lieu || "Adresse non disponible"}
-            </p>
+            <p class="parc-address" style="display: none;">📍 ${parc.adresse_complete || parc.adresse || "Adresse non disponible"}</p>
         </div>
     `;
 
@@ -42,50 +44,73 @@ const insertCard = (parc, conteneur) => {
     conteneur.appendChild(cardElement);
 };
 
-// Fonction intermédiaire qui s'occupe de vider et de ré-afficher les cartes triées
+/**
+ * Fonction intermédiaire qui s'occupe de vider et de ré-afficher les cartes triées
+ */
 const rafraichirAffichage = (listeDeParcs) => {
-    // On vide les colonnes avant d'injecter
-    listParcs.innerHTML = "";
-    listSquares.innerHTML = "";
-    listJardins.innerHTML = "";
+    // On vide les colonnes avant d'injecter (si elles existent)
+    if (listParcs) listParcs.innerHTML = "";
+    if (listSquares) listSquares.innerHTML = "";
+    if (listJardins) listJardins.innerHTML = "";
 
-    // On utilise la fonction de tri importée de utils.js
+    // utilise la fonction de tri importée de utils.js
     const resultatsTries = trierLesLieux(listeDeParcs);
 
-    // On affiche les éléments triés dans leurs colonnes respectives
-    resultatsTries.parcs.forEach(parc => insertCard(parc, listParcs));
-    resultatsTries.squares.forEach(square => insertCard(square, listSquares));
-    resultatsTries.jardins.forEach(jardin => insertCard(jardin, listJardins));
+    // affiche les éléments triés dans leurs colonnes respectives
+    if (resultatsTries.parcs && listParcs) resultatsTries.parcs.forEach(parc => insertCard(parc, listParcs));
+    if (resultatsTries.squares && listSquares) resultatsTries.squares.forEach(square => insertCard(square, listSquares));
+    if (resultatsTries.jardins && listJardins) resultatsTries.jardins.forEach(jardin => insertCard(jardin, listJardins));
 };
 
-// 2. Ton code d'origine validé pour récupérer les données avec async/await
+/**
+ * Récupérer les données avec async/await
+ */
 const fetchData = async () => {
     try {
         const response = await fetch("https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_parcs-jardins-nantes/records?limit=50");
+        
+        if (!response.ok) throw new Error("Erreur réseau lors du fetch");
+        
         const data = await response.json(); 
-        console.log("Données chargées avec async/await :", data);
+        
+        // filtre pour ne garder que ceux qui ont des coordonnées réelles
+        tousLesParcs = data.results.filter(parc => {
+            return parc.location && parc.location.lat && parc.location.lon;
+        });
 
-        // NOUVEAUTÉ : On stocke les parcs dans notre variable globale pour que la recherche y ait accès
-        tousLesParcs = data.results;
+        console.log("Données chargées et filtrées :", tousLesParcs);
 
-        // On appelle l'affichage initial avec tous les parcs
+        // Affichage initial avec uniquement les parcs valides
         rafraichirAffichage(tousLesParcs);
 
     } catch (error) {
-        console.error(error.message, "Une erreur est survenue lors de la récupération :");
+        console.error("Une erreur est survenue lors de la récupération :", error.message);
     }
 };
 
-// 3. Écouteur sur la barre de recherche
-searchInput.addEventListener("input", (event) => {
-    const texteSaisi = event.target.value;
-    
-    // On filtre notre tableau global grâce à la fonction de utils.js
-    const parcsFiltres = filtrerLesLieux(tousLesParcs, texteSaisi);
-    
-    // On met à jour l'écran avec les parcs restants
-    rafraichirAffichage(parcsFiltres);
-});
+/**
+ * Écouteur sur la barre de recherche
+ */
+if (searchInput) {
+    searchInput.addEventListener("input", (event) => {
+        const texteSaisi = event.target.value;
+        
+        // On récupère le grand conteneur des colonnes pour lui ajouter un "mode recherche"
+        const columnsContainer = document.querySelector(".categories-columns");
+
+        if (columnsContainer) {
+            if (texteSaisi.trim() !== "") {
+                columnsContainer.classList.add("is-searching");
+            } else {
+                columnsContainer.classList.remove("is-searching");
+            }
+        }
+        
+        // Filtrage des lieux
+        const parcsFiltres = filtrerLesLieux(tousLesParcs, texteSaisi);
+        rafraichirAffichage(parcsFiltres);
+    });
+}
 
 // Lancement au chargement de la page
 fetchData();

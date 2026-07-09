@@ -158,3 +158,69 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 400;
 }
+/* ---- 6. Mode Recherche Dynamique (Conseil Prof) ---- */
+
+/* 1. Si la colonne est vide pendant une recherche, on la cache avec une transition douce */
+.categories-columns.is-searching .column-category:not(:has(.card-circle)) {
+  display: none;
+}
+
+/* 2. On recentre automatiquement les colonnes restantes */
+.categories-columns.is-searching {
+  justify-content: center;
+  gap: 40px;
+}
+
+/* 3. Optionnel : Si une colonne reste toute seule, on lui donne un peu plus de largeur pour que ce soit joli */
+.categories-columns.is-searching .column-category {
+  max-width: 450px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ==========================================================================
+   CSS RESPONSIVE MOBILE (Pour les écrans de moins de 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  
+  /* On réduit un peu les marges globales de l'application */
+  .app-container {
+    padding: 10px;
+  }
+
+  /* Le header passe en colonne pour que le titre et la recherche respirent */
+  .main-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    padding: 15px 10px;
+  }
+
+  .search-container input {
+    width: 100%; /* La barre de recherche prend toute la largeur */
+    max-width: 100%;
+  }
+
+  /* On réduit la hauteur de la carte sur mobile pour ne pas bloquer tout l'écran */
+  #map-section iframe {
+    height: 300px !important; 
+  }
+
+  /* 🎯 LA MAGIE : Les 3 colonnes de catégories s'empilent verticalement */
+  .categories-columns {
+    flex-direction: column;
+    gap: 30px; /* Espace entre les blocs Parcs, Squares et Jardins */
+  }
+
+  /* Les grilles de galets s'adaptent pour ne pas faire de débordement */
+  .cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 15px;
+    justify-items: center;
+  }
+
+  /* On adapte légèrement la taille des galets si nécessaire */
+  .card-circle {
+    width: 130px;
+    height: 130px;
+  }
+}
