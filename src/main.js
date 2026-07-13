@@ -1,4 +1,4 @@
-// 1. On importe nos deux fonctions de logique métier depuis utils.js
+// importe nos deux fonctions de logique métier depuis utils.js
 import { trierLesLieux, filtrerLesLieux } from "./utils.js";
 
 // DOM
@@ -11,7 +11,7 @@ const searchInput = document.getElementById("search-input");
 let tousLesParcs = [];
 
 /**
- * Fonction de création et gestion d'une carte (galet organique)
+ * Fonction de création et gestion d'une carte (galets)
  */
 const insertCard = (parc, conteneur) => {
     if (!conteneur) return;
@@ -95,7 +95,7 @@ if (searchInput) {
     searchInput.addEventListener("input", (event) => {
         const texteSaisi = event.target.value;
         
-        // On récupère le grand conteneur des colonnes pour lui ajouter un "mode recherche"
+        //récupère le grand conteneur des colonnes pour lui ajouter un "mode recherche"
         const columnsContainer = document.querySelector(".categories-columns");
 
         if (columnsContainer) {

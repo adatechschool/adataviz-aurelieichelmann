@@ -38,7 +38,7 @@ export const trierLesLieux = (records) => {
         const nomLower = parc.nom_complet.toLowerCase();
 
         if (nomLower.includes("square")) {
-            // On l'ajoute UNIQUEMENT si la colonne n'est pas encore pleine
+            //l'ajoute UNIQUEMENT si la colonne n'est pas encore pleine
             if (listesTriees.squares.length < LIMITE_PAR_CATEGORIE) {
                 listesTriees.squares.push(parc);
             }
